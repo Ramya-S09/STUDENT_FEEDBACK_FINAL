@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Signup</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #c6e2ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            box-shadow: 0px 0px 10px rgb(46, 117, 182);
+        }
+        .container {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px;
+            padding: 30px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: rgb(46, 117, 182);
+            text-align: center;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: rgb(46, 117, 182);
+        }
+        input {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .signup-btn {
+            background:  rgb(46, 117, 182);
+            width: 100%;
+            height: 35px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <form action="sedit.php" method="POST">
+        <div class="container">
+            <h2>Update Profile</h2>
+            <p>Hey, enter your details to Update Profile</p>
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your Email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your Phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regno">Register no:</label>
+                <input type="text" id="regno" name="regno" placeholder="Enter your Regno" required>
+            </div>
+
+            <button class="signup-btn" type="submit">Update Profile</button>
+        </div>
+    </form>
+
+</body>
+</html>

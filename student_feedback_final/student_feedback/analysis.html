@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CO Feedback Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffeef4;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #dcdcdc;
+    }
+    .chart-container {
+      width: 400px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>CO Feedback Table</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Subject Code</th>
+        <th>CO No</th>
+        <th>Description</th>
+        <th>Excellent</th>
+        <th>Strongly Agree</th>
+        <th>Agree</th>
+        <th>Disagree</th>
+        <th>Strongly Disagree</th>
+        <th>Avg</th>
+        <th>Avg(3)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ai3021</td>
+        <td>1</td>
+        <td>The students shall be able to understand the applications of IT in remote sensing applications such as Drones etc.</td>
+        <td>3</td>
+        <td>2</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>4.83</td>
+        <td>1.61</td>
+      </tr>
+      <tr>
+        <td>ai3021</td>
+        <td>2</td>
+        <td>The students will be able to get a clear understanding of how a greenhouse can be automated and its advantages.</td>
+        <td>4</td>
+        <td>2</td>
+        <td>2</td>
+        <td>1</td>
+        <td>0</td>
+        <td>6.00</td>
+        <td>2.00</td>
+      </tr>
+      <tr>
+        <td>ai3021</td>
+        <td>3</td>
+        <td>The students will be able to apply IT principles and concepts for management of field operations.</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>2.00</td>
+        <td>0.66</td>
+      </tr>
+      <tr>
+        <td>ai3021</td>
+        <td>4</td>
+        <td>The students will get an understanding about weather models, their inputs and applications.</td>
+        <td>6</td>
+        <td>4</td>
+        <td>1</td>
+        <td>0</td>
+        <td>3</td>
+        <td>8.66</td>
+        <td>2.88</td>
+      </tr>
+      <tr>
+        <td>ai3021</td>
+        <td>5</td>
+        <td>The students will get an understanding of how IT can be used for e-governance in agriculture.</td>
+        <td>3</td>
+        <td>2</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>5.16</td>
+        <td>1.72</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Combined Feedback Chart</h2>
+  <div class="chart-container">
+    <canvas id="feedbackChart"></canvas>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('feedbackChart').getContext('2d');
+
+    const feedbackData = {
+      labels: ['Excellent', 'Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+      datasets: [{
+        label: 'Total Feedback Counts',
+        data: [17, 11, 6, 3, 5], // Sum of all rows per category
+        backgroundColor: ['green', 'blue', 'orange', 'purple', 'red']
+      }]
+    };
+
+    const feedbackChart = new Chart(ctx, {
+      type: 'pie', // You can change to 'bar' if needed
+      data: feedbackData,
+      options: {
+        responsive: false,
+        plugins: {
+          legend: {
+            position: 'right'
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

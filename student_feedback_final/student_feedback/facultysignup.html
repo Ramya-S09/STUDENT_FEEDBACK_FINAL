@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <style>
+        body,html{
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #c6e2ff;
+            color: rgb(46, 117, 182);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .signin-box {
+            background:white;
+            color: rgb(46, 117, 182);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 360px;
+
+        }
+        .signin-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .signin-box input[type="text"],
+        .signin-box input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid rgb(46, 117, 182);
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .error-message {
+            color: red;
+            text-align: left;
+            margin-bottom: 10px;
+            display: none;
+            font-size: 12px;
+        }
+        .signin-box input[type="submit"] {
+            width:100%;
+            padding: 10px;
+            background: white;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .signin-box input[type="submit"]:hover {
+            background: rgb(11, 70, 126);
+        }
+        .signin-box a {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: rgb(11, 70, 126);
+            text-decoration: none;
+        }
+        .signin-box a:hover {
+            text-decoration: underline;
+        }
+        #sub{
+            background-color: rgb(46, 117, 182);
+            color: white;
+        }
+        .h4{
+            text-align: center;
+        }
+ 
+    </style>
+</head>
+<body>
+    <div class="signin-box">
+        <h2>Sign Up</h2>
+        <h4>If you are a first time user set up password </h4>
+        <form name="signinForm" action="signupsetpassword.html" method="POST">
+            
+            <input type="submit" id="sub" value="SignUp" >
+        </form>
+    </div>
+</body>
+</html>

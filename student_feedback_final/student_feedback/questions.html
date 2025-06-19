@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Feedback Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 5vh; margin: 0; background: #c6e2ff;}
+        .container { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); width: 100%; max-width:800px; }
+        h2 { text-align: center;color:rgb(46, 117, 182); }
+        input[type="text"] { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .question { margin-bottom: 10px; }
+        .options label { margin-right: 10px; }
+        .buttons { display: flex; justify-content: center;  width: 100%; margin-top: 20px; }
+        button { padding: 10px 20px; border: none; border-radius: 5px; background: rgb(46, 117, 182); color: white; cursor: pointer; width: 100%; max-width: 300px; }
+        button:hover { background: rgb(46, 117, 182); }
+    </style>
+</head>
+<body>
+    <div class="container" id="form-container">
+        <h2>STUDENT FEEDBACK FORM</h2>
+        <input type="text" placeholder="Roll No" id="rollNo" required>
+        <input type="text" placeholder="Faculty" id="faculty" value="John Cena" required>
+        <input type="text" placeholder="Subject" id="subject" value="C++" required>
+
+        <script>
+            const questions = [
+                "Description of course objectives & assignments",
+                "Communication of ideas & information",
+                "Expression of expectations for performance",
+                "Availability to assist students in or out of class",
+                "Respect or concern for students",
+                "Stimulation of interest in course",
+                
+            ];
+
+            for (let i = 0; i < questions.length; i++) {
+                document.write(`<div class="question">${i + 1}. ${questions[i]}:
+                    <div class="options">
+                        <label><input type="radio" name="q${i + 1}" value="1"> Poor</label>
+                        <label><input type="radio" name="q${i + 1}" value="2"> Fair</label>
+                        <label><input type="radio" name="q${i + 1}" value="3"> Good</label>
+                        <label><input type="radio" name="q${i + 1}" value="4"> Very Good</label>
+                        <label><input type="radio" name="q${i + 1}" value="5"> Excellent</label>
+                    </div>
+                </div>`);
+            }
+        </script>
+
+        <div class="buttons">
+            <button onclick="showFeedback()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        function showFeedback() {
+            const rollNo = document.getElementById('rollNo').value;
+            const faculty = document.getElementById('faculty').value;
+            const subject = document.getElementById('subject').value;
+
+            if (!rollNo || !faculty || !subject) {
+                alert('Please fill out all fields before submitting!');
+                return;
+            }
+
+            alert('Feedback submitted successfully!');
+            document.getElementById('form-container').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

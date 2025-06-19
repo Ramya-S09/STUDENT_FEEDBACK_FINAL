@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Rating</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 250px;
+            background-color: rgb(143, 204, 237);
+        }
+        .rating-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .star {
+            font-size: 30px;
+            color: gray;
+            transition: color 0.3s;
+        }
+        .star.active {
+            color: gold;
+        }
+        .rating-label {
+            margin: 10px auto;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 5px 15px;
+            background: lightgray;
+            display: inline-block;
+            border-radius: 5px;
+            text-align: center;
+        }
+        #h2{
+            font-size: 30px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+     <div id="h2">
+    <h2>Rate Us with Stars</h2>
+    </div>
+    <div class="rating-container">
+        <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+        </div>
+        <div class="rating-label" id="rating-text">Awful</div>
+    </div>
+
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const ratingText = document.getElementById('rating-text');
+        const labels = ["Awful", "Bad", "Good", "Very Good", "Excellent"];
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                stars.forEach(s => s.classList.remove('active'));
+                for (let i = 0; i <= index; i++) {
+                    stars[i].classList.add('active');
+                }
+                ratingText.textContent = labels[index];
+            });
+        });
+    </script>
+
+</body>
+</html>

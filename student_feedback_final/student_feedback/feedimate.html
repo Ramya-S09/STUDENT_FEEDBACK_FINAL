@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="feedimate.css">
+</head>
+<body>
+    <div id="half1">
+        <img src="psna.jpg" width="90" height="90" alt="Logo">
+        <h2>ENIAC FEEDBACK SYSTEM<p id="hii">Student Feedback Supporter</p></h2>
+    </div>
+    <br>
+    <div id="full">
+        <h3>ENIAC STUDENT FEEDBACK FORM</h3>
+        <form action="questions.html" method="GET">
+            <table>
+                <tr>
+                    <td><label for="name">Name</label></td>
+                    <td><input type="text" name="name" id="name" placeholder="Enter Full Name" required></td>
+                </tr>
+                <tr>
+                    <td><label for="regno">Register No</label></td>
+                    <td><input type="text" name="regno" id="regno" placeholder="Enter Register Number" required></td>
+                </tr>
+                <tr>
+                    <td><label for="mail">Mail ID</label></td>
+                    <td><input type="email" name="mail" id="mail" placeholder="Enter College Email" required></td>
+                </tr>
+                <tr>
+                    <td><label for="department">Department</label></td>
+                    <td>
+                        <select id="department" name="department" required>
+                            <option value="" disabled selected>Select Department</option>
+                            <option value="CSE">CSE</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="year">Year</label></td>
+                    <td>
+                        <select id="year" name="year" onchange="updateSubjects()" required>
+                            <option value="" disabled selected>Select Year</option>
+                            <option value="1st">1st Year ODD Sem</option>
+                            <option value="1st2">1st Year EVEN Sem</option>
+                            <option value="2nd">2nd Year ODD Sem</option>
+                            <option value="2nd2">2nd Year EVEN Sem</option>
+                            <option value="3rd">3rd Year ODD Sem</option>
+                            <option value="3rd2">3rd Year EVEN Sem</option>
+                            <option value="4th">4th Year ODD Sem</option>
+                            <option value="4th2">4th Year EVEN Sem</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="facultyname">Faculty Name</label></td>
+                    <td>
+                        <select id="facultyname" name="facultyname" required>
+                            <option value="" disabled selected>Select Faculty</option>
+                            <option value="Dr.D.Shanthi">Dr.D.Shanthi, M.E., Ph.D.</option>
+                            <option value="Dr.S.SheikFaritha">Dr.S.SheikFaritha Begum, M.E., Ph.D.</option>
+                            <option value="Mrs.P.Anitha">Mrs.P.Anitha Christy Angelin, M.E.</option>
+                            <option value="Dr.D.M.D.Preethi">Dr.D.M.D.Preethi, M.E., Ph.D.</option>
+                            <option value="Mrs.L.Hemalatha">Mrs.L.Hemalatha, M.E.</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="subject">Subject</label></td>
+                    <td>
+                        <select id="subject" name="subject" required>
+                            <option value="" disabled selected>Select Subject</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Submit"></td>
+                    <td><input type="reset" value="Reset"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <script>
+        const subjects = {
+            "1st": ["Maths", "Physics", "Chemistry"],
+            "1st2": ["Maths", "OS", "EG"],
+            "2nd": ["Data Structures", "Digital Electronics", "OOP"],
+            "2nd2": ["DS", "DBMS"],
+            "3rd": ["DBMS", "Operating Systems", "Computer Networks"],
+            "3rd2": ["Computer Networks", "Web Technology"],
+            "4th": ["AI", "Machine Learning", "Cyber Security"],
+            "4th2": ["Linux", "UIUX"]
+        };
+
+        function updateSubjects() {
+            const yearDropdown = document.getElementById("year");
+            const subjectDropdown = document.getElementById("subject");
+            const selectedYear = yearDropdown.value;
+
+            subjectDropdown.innerHTML = '<option value="" disabled selected>Select Subject</option>';
+
+            if (selectedYear && subjects[selectedYear]) {
+                subjects[selectedYear].forEach(subject => {
+                    const option = document.createElement("option");
+                    option.value = subject;
+                    option.textContent = subject;
+                    subjectDropdown.appendChild(option);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

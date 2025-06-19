@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Signup</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #c6e2ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            box-shadow: 0px 0px 10px rgb(46, 117, 182);
+        }
+        .container {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px;
+            padding: 30px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: rgb(46, 117, 182);
+            text-align: center;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: rgb(46, 117, 182);
+        }
+        input {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+        .password-container .success {
+            color: green;
+            display: none;
+            font-size: 12px;
+        }
+        .password-container .error {
+            color: red;
+            display: none;
+            font-size: 12px;
+        }
+        .signup-btn {
+            background:  rgb(46, 117, 182);
+            width: 100%;
+            height: 35px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .signup-btn:disabled {
+            background: rgb(46, 117, 182);
+            cursor: not-allowed;
+        }
+        .g_id_signin {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form action="signup.php" method="POST">
+    <div class="container">
+        <h2>Sign up</h2>
+        <p>Hey, enter your details to create your account</p>
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your Name">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your Email">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your Phone">
+        </div>
+        <div class="form-group">
+            <label for="phone">Register No:</label>
+            <input type="tel" id="regno" name="regno" placeholder="Enter your Register No">
+        </div>
+
+        <div class="form-group password-container">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Create Password">
+            <div class="success">✔ Password meets requirements!</div>
+            <div class="error">✖ Password must be at least 8 characters long, contain a letter and a number!</div>
+        </div>
+        <div class="form-group password-container">
+            <label for="password">Confirm Password:</label>
+            <input type="password" id="cpassword" name="cpassword" placeholder="Confirm  Password">
+            <div class="success">✔ Password meets requirements!</div>
+            <div class="error">✖ Password must be at least 8 characters long, contain a letter and a number!</div>
+        </div>
+
+
+        <button class="signup-btn" id="signup-btn" disabled>Sign up</button>
+
+        <p>Or Signup with</p>
+        <div id="g_id_onload"
+             data-client_id="YOUR_GOOGLE_CLIENT_ID"
+             data-context="signup"
+             data-ux_mode="popup"
+             data-callback="handleCredentialResponse">
+        </div>
+        <div class="g_id_signin" data-type="standard"></div>
+
+        <p>Already have an account? <a href="signinpage.html">Sign in</a></p>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const passwordContainer = document.querySelector('.password-container');
+        const errorMsg = document.querySelector('.password-container .error');
+        const successMsg = document.querySelector('.password-container .success');
+        const signupBtn = document.getElementById('signup-btn');
+
+        passwordInput.addEventListener('input', () => {
+            const value = passwordInput.value;
+            if (value.length >= 8 && /[a-z]/.test(value) && /[0-9]/.test(value)) {
+                passwordContainer.classList.add('valid');
+                passwordContainer.classList.remove('invalid');
+                successMsg.style.display = 'block';
+                errorMsg.style.display = 'none';
+                signupBtn.disabled = false;
+            } else {
+                passwordContainer.classList.remove('valid');
+                passwordContainer.classList.add('invalid');
+                successMsg.style.display = 'none';
+                errorMsg.style.display = 'block';
+                signupBtn.disabled = true;
+            }
+        });
+
+        function handleCredentialResponse(response) {
+            console.log("Google Token: ", response.credential);
+        }
+    </script>
+    </form>
+</body>
+</html>

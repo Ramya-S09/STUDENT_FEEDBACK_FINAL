@@ -1,0 +1,98 @@
+table{
+    width: 25%;
+    margin:auto;
+    border-collapse: separate;
+    border-spacing: 15px 15px;
+}
+body{
+    background-color:#F8F9FA;
+}
+
+h2{
+    text-align: center;
+    font-size: 19px;
+    color:whitesmoke;
+    margin-bottom: 10px;
+    font-family:Arial, sans-serif;
+}
+h3 {
+    margin-top: 0px; /* Adjust the spacing */
+    text-align: center;
+    color:rgb(46, 117, 182);
+}
+
+td{
+    font-size: 16px;
+}
+
+input, select {
+    width: 200px;  
+    height: 30px;
+    padding: 5px;
+    font-size: 13px;
+    font-family:Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+input[type="submit"]{
+    color: whitesmoke;
+    background-color: rgb(46, 117, 182);
+    border-color: rgb(46, 117, 182);
+    padding: 5px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+input[type="reset"]{
+    color: whitesmoke;
+    background-color:  rgb(245, 122, 122);
+    border-color: rgb(245, 122, 122);
+    padding: 5px 19px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+#full{
+    padding-left: 10px;
+    padding-top: 40px;
+    background-color: rgb(255, 255, 255);
+    width: 500px;
+    height: 500px;
+    padding-right: 30px;
+}
+
+body,html{
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(225, 238, 250);
+    font-family:Arial, sans-serif;
+}
+
+#half1{
+    padding-left: 30px;
+    padding-top: 40px;
+    background-color: rgb(46, 117, 182);
+    width: 400px;
+    height: 500px;
+    padding-right: 50px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px; 
+}
+
+#intext{
+    font-size: 16px;
+    color: whitesmoke;
+    font-family: Arial, sans-serif;
+    margin-left: 5px;
+    margin-top: 5px; 
+}
+
+#hii{
+    font-size: 15px;
+}

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENIAC Student Feed</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Faculty filtering script
+        const facultyList = [
+            { id: 1, value: "Dr. M.S. Thanabal" }, { id: 2, value: "Dr. S. Pushpalatha" },
+            { id: 3, value: "Dr. A. Thomas Paul Roy" }, { id: 4, value: "Dr. D. Suresh" },
+            { id: 5, value: "Dr. R. Sujitha" }, { id: 6, value: "Dr. S. Satheeshbabu" },
+            { id: 7, value: "Dr. M. Buvana" }, { id: 8, value: "Dr. A. Sathya Sofia" },
+            { id: 9, value: "Dr. D. M. D. Preethi" }, { id: 10, value: "Mr. K. Suresh" },
+            { id: 11, value: "Mrs. J. Punitha Nicholine" }, { id: 12, value: "Dr. Y. Arockia Raj" },
+            { id: 13, value: "Mrs. S. Naganandhini" }, { id: 14, value: "Mrs. C. Sathya" },
+            { id: 15, value: "Mr. V. Nanda Kumar" }, { id: 16, value: "Mrs. S. Santhana Prabha" },
+            { id: 17, value: "Ms. S. T. Shenbagavalli" }, { id: 18, value: "Mrs. G. Mariammal" },
+            { id: 19, value: "Mrs. V. Priya" }, { id: 20, value: "Mrs. M. Jayanthi" },
+            { id: 21, value: "Mrs. A. Joyce" }, { id: 22, value: "Mrs. K. Gayathri" },
+            { id: 23, value: "Mrs. R. Gayathri" }, { id: 24, value: "Ms. L. Dharshana Deepthi" },
+            { id: 25, value: "Dr. S. SheikFaritha Begum" }, { id: 26, value: "Mrs. P. Anitha Christy Angelin" },
+            { id: 27, value: "Ms. N. Indumathi" }, { id: 28, value: "Mrs. M. Rabiyathul Bachiriya" },
+            { id: 29, value: "Dr. N. Kalpana" }, { id: 30, value: "Mrs. R. Sujitha" },
+            { id: 31, value: "Mrs. T. Deepa" }, { id: 32, value: "Mrs. P. Joy Kiruba" },
+            { id: 33, value: "Mrs. L. Hemalatha" }, { id: 34, value: "Mr. M. Kamarajan" },
+            { id: 35, value: "Ms. S. Aadhitya" }, { id: 36, value: "Ms. N. Padmapriya" },
+            { id: 37, value: "Mrs. S. Aurthy Felicita" }, { id: 38, value: "Mr. V. Karuppuchamy" },
+            { id: 39, value: "Dr. D. Shanthi" }, { id: 40, value: "Dr. N. Dhanalakshmi" },
+            { id: 41, value: "Dr. N. Uma Maheshwari" },{ id: 42, value: "Dr. N. Pandeeswari" }
+        ];
+
+        function filterFaculty() {
+            const input = document.getElementById("facultyInput");
+            const filter = input.value.toLowerCase().trim();
+            const dropdown = document.getElementById("facultyDropdown");
+            dropdown.innerHTML = ""; // Clear previous results
+
+            if (filter) {
+                let matchCount = 0;
+                facultyList.forEach(faculty => {
+                    if (faculty.value.toLowerCase().includes(filter)) {
+                        const div = document.createElement("div");
+                        div.textContent = faculty.value;
+                        div.classList.add("dropdown-item");
+                        div.onclick = () => selectFaculty(faculty.id, faculty.value);
+                        dropdown.appendChild(div);
+                        matchCount++;
+                    }
+                });
+                dropdown.style.display = matchCount > 0 ? "block" : "none";
+            } else {
+                dropdown.style.display = "none";
+            }
+        }
+
+        function selectFaculty(id, value) {
+            document.getElementById("facultyInput").value = value;
+            const dropdown = document.getElementById("facultyDropdown");
+            dropdown.innerHTML = "";
+            dropdown.style.display = "none";
+        }
+
+        document.addEventListener("click", function(event) {
+            const dropdown = document.getElementById("facultyDropdown");
+            const input = document.getElementById("facultyInput");
+            if (!dropdown.contains(event.target) && event.target !== input) {
+                dropdown.style.display = "none";
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("facultyInput").addEventListener("input", filterFaculty);
+            document.getElementById("subjectInput").addEventListener("input", loadPartB); // Trigger loadPartB on subject input
+        });
+
+        // function loadPartB() {
+        //     const subjectCode = document.getElementById("subjectInput").value;
+
+        //     if (subjectCode.trim() === "") {
+        //         $("#partB").html(""); // Clear Part B if no subject code
+        //         return;
+        //     }
+
+        //     const formData = {
+        //         subject: subjectCode,
+        //         regno: document.getElementById("regno").value,
+        //         sname: document.getElementById("sname").value,
+        //         section: document.getElementById("section").value,
+        //         address: document.getElementById("address").value,
+        //         mobile: document.getElementById("mobile").value,
+        //         email: document.getElementById("email").value,
+        //         dob: document.getElementById("dob").value,
+        //         fname: document.getElementById("facultyInput").value
+        //     };
+
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "survey1duplicate.php", // Pointing to your server-side script to fetch Part B questions
+        //         data: formData,
+        //         success: function(response) {
+        //             $("#partB").html(response); // Update Part B with the response data
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error("An error occurred:", error);
+        //         }
+        //     });
+        // }
+        function loadPartB() {
+    const subjectCode = document.getElementById("subjectInput").value;
+
+    // Display the selected subject immediately
+    document.getElementById("selectedSubject").textContent = subjectCode;
+
+    if (subjectCode.trim() === "") {
+        $("#partB").html(""); // Clear Part B if no subject code
+        return;
+    }
+
+    const formData = {
+        subject: subjectCode,
+        regno: document.getElementById("regno").value,
+        sname: document.getElementById("sname").value,
+        section: document.getElementById("section").value,
+        address: document.getElementById("address").value,
+        mobile: document.getElementById("mobile").value,
+        email: document.getElementById("email").value,
+        dob: document.getElementById("dob").value,
+        fname: document.getElementById("facultyInput").value
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "survey1duplicate.php", // Pointing to your server-side script to fetch Part B questions
+        data: formData,
+        success: function(response) {
+            $("#partB").html(response); // Update Part B with the response data
+        },
+        error: function(xhr, status, error) {
+            console.error("An error occurred:", error);
+        }
+    });
+}
+
+        function validateForm() {
+            // Validate Part A fields
+            const requiredFields = [
+                "regno", "sname", "section", "address", "mobile", "email", "dob", "facultyInput"
+            ];
+
+            for (let field of requiredFields) {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    alert(Please fill out the ${input.previousElementSibling.innerText});
+                    input.focus();
+                    return false; // Prevent form submission
+                }
+            }
+
+            // Validate Part A questions
+            const partAQuestions = document.querySelectorAll("input[type='radio'][name^='Q']");
+            if (partAQuestions.length > 0) {
+                let allAnswered = true;
+                partAQuestions.forEach(question => {
+                    const name = question.name;
+                    if (!document.querySelector(input[name='${name}']:checked)) {
+                        allAnswered = false;
+                    }
+                });
+
+                if (!allAnswered) {
+                    alert("Please answer all Part A questions.");
+                    return false; // Prevent form submission
+                }
+            }
+
+            // Validate Part B questions
+            const partBQuestions = document.querySelectorAll("#partB input[type='radio']");
+            if (partBQuestions.length > 0) {
+                let allAnswered = true;
+                partBQuestions.forEach(question => {
+                    const name = question.name;
+                    if (!document.querySelector(input[name='${name}']:checked)) {
+                        allAnswered = false;
+                    }
+                });
+
+                if (!allAnswered) {
+                    alert("Please answer all Part B questions.");
+                    return false; // Prevent form submission
+                }
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
+    <style>
+                .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            z-index: 1;
+            width: 100%;
+        }
+        .dropdown-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+<form method='POST' action='survey_backend.php' onsubmit="return validateForm();">
+    <div class='container'>
+        <h1 style="color:rgb(46, 117, 182);text-align: center;">ENIAC STUDENT FEED</h1><br><hr>
+        <div class='row'>
+            <div class='col-md-4'><label for="regno">Register Number </label><input name='regno' id='regno' class='form-control' required></div>
+            <div class='col-md-4'><label for="sname">Student Name </label><input name='sname' id='sname' class='form-control' required></div>
+            <div class='col-md-4'><label for="section">Section </label><input name='section' id='section' class='form-control' required></div>
+            <div class='col-md-4 bg-light'><label for="address">Permanent Address </label><input name='address' id='address' class='form-control' required></div>
+            <div class='col-md-4'><label for="mobile">Mobile/Phone Number </label><input name='mobile' id='mobile' class='form-control' required></div>
+            <div class='col-md-4'><label for="email">E-Mail Address </label><input name='email' id='email' class='form-control' required></div>
+            <div class='col-md-4'><label for="dob">Date of Birth </label><input name='dob' id='dob' class='form-control' required></div>
+            <!-- <div class="col-md-4">
+                <label for="facultyInput">Faculty Name</label>
+                <br>
+                <input type="text" id="facultyInput" name="fname" class='form-control' required>
+                <div id="facultyDropdown" class="dropdown-content"></div>
+                <select id="facultyInput" name="fname" class="form-control"  required>
+                    <option value="" disabled selected>Select Faculty</option>
+                    <option value="Dr. M.S. Thanabal">Dr. M.S. Thanabal</option>
+                    <option value="Dr. S. Pushpalatha">Dr. S. Pushpalatha</option>
+                    <option value="Dr. A. Thomas Paul Roy">Dr. A. Thomas Paul Roy</option>
+                    <option value="Dr. D. Suresh">Dr. D. Suresh</option>
+                    <option value="Dr. N. Dhanalakshmi">Dr. N. Dhanalakshmi</option>
+                    <option value="Dr. S. Satheeshbabu">Dr. S. Satheeshbabu</option>
+                    <option value="Dr. M. Buvana">Dr. M. Buvana</option>
+                    <option value="Dr. A. Sathya Sofia">Dr. A. Sathya Sofia</option>
+                    <option value="Dr. D. M. D. Preethi">Dr. D. M. D. Preethi</option>
+                    <option value="Mr. K. Suresh">Mr. K. Suresh</option>
+                    <option value="Mrs. J. Punitha Nicholine">Mrs. J. Punitha Nicholine</option>
+                    <option value="Dr. Y. Arockia Raj">Dr. Y. Arockia Raj</option>
+                    <option value="Mrs. S. Naganandhini">Mrs. S. Naganandhini</option>
+                    <option value="Mrs. C. Sathya">Mrs. C. Sathya</option>
+                    <option value="Mr. V. Nanda Kumar">Mr. V. Nanda Kumar</option>
+                    <option value="Mrs. S. Santhana Prabha">Mrs. S. Santhana Prabha</option>
+                    <option value="Ms. S. T. Shenbagavalli">Ms. S. T. Shenbagavalli</option>
+                    <option value="Mrs. G. Mariammal">Mrs. G. Mariammal</option>
+                    <option value="Mrs. V. Priya">Mrs. V. Priya</option>
+                    <option value="Mrs. M. Jayanthi">Mrs. M. Jayanthi</option>
+                    <option value="Mrs. A. Joyce">Mrs. A. Joyce</option>
+                    <option value="Mrs. K. Gayathri">Mrs. K. Gayathri</option>
+                    <option value="Mrs. R. Gayathri">Mrs. R. Gayathri</option>
+                    <option value="Ms. L. Dharshana Deepthi">Ms. L. Dharshana Deepthi</option>
+                    <option value="Dr. S. SheikFaritha Begum">Dr. S. SheikFaritha Begum</option>
+                    <option value="Mrs. P. Anitha Christy Angelin">Mrs. P. Anitha Christy Angelin</option>
+                    <option value="Ms. N. Indumathi">Ms. N. Indumathi</option>
+                    <option value="Mrs. M. Rabiyathul Bachiriya">Mrs. M. Rabiyathul Bachiriya</option>
+                    <option value="Dr. N. Kalpana">Dr. N. Kalpana</option>
+                    <option value="Mrs. R. Sujitha">Mrs. R. Sujitha</option>
+                    <option value="Mrs. T. Deepa">Mrs. T. Deepa</option>
+                    <option value="Mrs. P. Joy Kiruba">Mrs. P. Joy Kiruba</option>
+                    <option value="Mrs. L. Hemalatha">Mrs. L. Hemalatha</option>
+                    <option value="Mr. M. Kamarajan">Mr. M. Kamarajan</option>
+                    <option value="Ms. S. Aadhitya">Ms. S. Aadhitya</option>
+                    <option value="Ms. N. Padmapriya">Ms. N. Padmapriya</option>
+                    <option value="Mrs. S. Aurthy Felicita">Mrs. S. Aurthy Felicita</option>
+                    <option value="Mr. V. Karuppuchamy">Mr. V. Karuppuchamy</option>
+                    <option value="Dr. D. Shanthi">Dr. D. Shanthi</option>
+                    <option value="Dr. N. Dhanalakshmi">Dr. N. Dhanalakshmi</option>
+                    <option value="Dr. N. Kalpana">Dr. N. Kalpana</option>
+                </select>
+                
+            </div> -->
+            <div class="col-md-4" style="position: relative;">
+                <label for="facultyInput">Faculty Name</label>
+                <br>
+                <div style="position: relative;">
+                    <input type="text" id="facultyInput" name="fname" class='form-control' placeholder="Select Faculty" required readonly onclick="toggleDropdown()" style="background-color: white; border: 1px solid #ced4da; padding-right: 30px;">
+                    <span class="dropdown-arrow" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">▼</span>
+                </div>
+                <div id="facultyDropdown" class="dropdown-content" style="display: none; position: absolute; z-index: 1; width: 100%; max-height: 200px; overflow-y: auto; border: 1px solid #ced4da; background-color: white;">
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. M.S. Thanabal')">Dr. M.S. Thanabal</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. S. Pushpalatha')">Dr. S. Pushpalatha</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. A. Thomas Paul Roy')">Dr. A. Thomas Paul Roy</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. D. Suresh')">Dr. D. Suresh</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. R. Sujitha')">Dr. R. Sujitha</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. S. Satheeshbabu')">Dr. S. Satheeshbabu</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. M. Buvana')">Dr. M. Buvana</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. A. Sathya Sofia')">Dr. A. Sathya Sofia</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. D. M. D. Preethi')">Dr. D. M. D. Preethi</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mr. K. Suresh')">Mr. K. Suresh</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. J. Punitha Nicholine')">Mrs. J. Punitha Nicholine</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. Y. Arockia Raj')">Dr. Y. Arockia Raj</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. S. Naganandhini')">Mrs. S. Naganandhini</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. C. Sathya')">Mrs. C. Sathya</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mr. V. Nanda Kumar')">Mr. V. Nanda Kumar</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. S. Santhana Prabha')">Mrs. S. Santhana Prabha</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Ms. S. T. Shenbagavalli')">Ms. S. T. Shenbagavalli</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. G. Mariammal')">Mrs. G. Mariammal</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. V. Priya')">Mrs. V. Priya</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. M. Jayanthi')">Mrs. M. Jayanthi</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. A. Joyce')">Mrs. A. Joyce</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. K. Gayathri')">Mrs. K. Gayathri</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. R. Gayathri')">Mrs. R. Gayathri</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Ms. L. Dharshana Deepthi')">Ms. L. Dharshana Deepthi</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. S. SheikFaritha Begum')">Dr. S. SheikFaritha Begum</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. P. Anitha Christy Angelin')">Mrs. P. Anitha Christy Angelin</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Ms. N. Indumathi')">Ms. N. Indumathi</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. M. Rabiyathul Bachiriya')">Mrs. M. Rabiyathul Bachiriya</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. N. Kalpana')">Dr. N. Kalpana</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. R. Sujitha')">Mrs. R. Sujitha</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. T. Deepa')">Mrs. T. Deepa</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. P. Joy Kiruba')">Mrs. P. Joy Kiruba</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. L. Hemalatha')">Mrs. L. Hemalatha</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mr. M. Kamarajan')">Mr. M. Kamarajan</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Ms. S. Aadhitya')">Ms. S. Aadhitya</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Ms. N. Padmapriya')">Ms. N. Padmapriya</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mrs. S. Aurthy Felicita')">Mrs. S. Aurthy Felicita</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Mr. V. Karuppuchamy')">Mr. V. Karuppuchamy</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. D. Shanthi')">Dr. D. Shanthi</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. N. Dhanalakshmi')">Dr. N. Dhanalakshmi</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. N. Uma Maheshwari')">Dr. N. Uma Maheshwari</div>
+                    <div class="dropdown-item" onclick="selectFaculty('Dr. N. Pandeeswari')">Dr. N. Pandeeswari</div>
+                </div>
+            </div>
+            
+            <script>
+                function toggleDropdown() {
+                    const dropdown = document.getElementById("facultyDropdown");
+                    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+                }
+            
+                function selectFaculty(facultyName) {
+                    document.getElementById("facultyInput").value = facultyName;
+                    document.getElementById("facultyDropdown").style.display = "none"; // Hide dropdown after selection
+                }
+            
+                // Close the dropdown if the user clicks outside of it
+                document.addEventListener("click", function(event) {
+                    const dropdown = document.getElementById("facultyDropdown");
+                    const input = document.getElementById("facultyInput");
+                    if (!dropdown.contains(event.target) && event.target !== input) {
+                        dropdown.style.display = "none";
+                    }
+                });
+            </script>
+            
+            <style>
+                .form-control {
+                    background-color: white; /* Set background color to white */
+                    border: 1px solid #ced4da; /* Set border color */
+                    border-radius: 0.25rem; /* Set border radius */
+                    padding-right: 30px; /* Add padding for the dropdown arrow */
+                }
+            
+                .dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 100%; /* Ensure the dropdown width matches the input field */
+    max-height: 200px; /* Set max height for the dropdown */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ced4da; /* Set border for dropdown */
+    background-color: white; /* Set background color for dropdown */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add shadow for dropdown */
+}
+
+    .dropdown-item {
+        padding: 8px 12px; /* Add padding for dropdown items */
+        cursor: pointer; /* Change cursor to pointer on hover */
+    }
+
+    .dropdown-item:hover {
+        background-color: #f1f1f1; /* Change background color on hover */
+    }
+
+    .dropdown-arrow {
+        font-size: 12px; /* Adjust font size for the dropdown arrow */
+        color: #6c757d; /* Set color for the dropdown arrow */
+    }
+</style>           
+            <script>
+                function toggleDropdown() {
+                    const dropdown = document.getElementById("facultyDropdown");
+                    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+                }
+            
+                function selectFaculty(facultyName) {
+                    document.getElementById("facultyInput").value = facultyName;
+                    document.getElementById("facultyDropdown").style.display = "none"; // Hide dropdown after selection
+                }
+            
+                // Close the dropdown if the user clicks outside of it
+                document.addEventListener("click", function(event) {
+                    const dropdown = document.getElementById("facultyDropdown");
+                    const input = document.getElementById("facultyInput");
+                    if (!dropdown.contains(event.target) && event.target !== input) {
+                        dropdown.style.display = "none";
+                    }
+                });
+            </script>
+            <div class='col-md-4' style="position: relative;">
+                <label for="subjectInput">Subject Name</label>
+                <input type='text' id='subjectInput' name='subject_value' class='form-control' required>
+                <input type='hidden' id='subjectId' name='subject_id'>
+                <input type='hidden' id='subjectName' name='subject_name'>
+                <div id='subjectDropdown' class='dropdown-content'></div>
+                
+            </div>
+            <div class='col-md-4'>
+                <label for="selectedSubject">Selected Subject</label>
+                <div id="selectedSubject" class='form-control' style="border: none; background-color: transparent;" readonly></div>
+            </div>
+
+        </div>
+
+        <h3>Part A: General Feedback</h3>
+        <div class='row'>
+            <div class='col-md-12'><span class="font-weight-bold"> 1) Quality of the course content</span><br>
+                <input type='radio' name='QA' value='5' required> Excellent<br>
+                <input type='radio' name='QA' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QA' value='3' required> Agree<br>
+                <input type='radio' name='QA' value='2' required> Disagree<br>
+                <input type='radio' name='QA' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">2) Relevance of the textbook to this course</span><br>
+                <input type='radio' name='QB' value='5' required> Excellent<br>
+                <input type='radio' name='QB' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QB' value='3' required> Agree<br>
+                <input type='radio' name='QB' value='2' required> Disagree<br>
+                <input type='radio' name='QB' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">3) List the ideas/concepts that you found difficult to grasp</span><br>
+                <input type='radio' name='QC' value='5' required> Excellent<br>
+                <input type='radio' name='QC' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QC' value='3' required> Agree<br>
+                <input type='radio' name='QC' value='2' required> Disagree<br>
+                <input type='radio' name='QC' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">4) List the concepts/topics that should be removed from the syllabus</span><br>
+                <input type='radio' name='QD' value='5' required> Excellent<br>
+                <input type='radio' name='QD' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QD' value='3' required> Agree<br>
+                <input type='radio' name='QD' value='2' required> Disagree<br>
+                <input type='radio' name='QD' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">5) List the new inclusions in the syllabus that are recommended from your viewpoint</span><br>
+                <input type='radio' name='QE' value='5' required> Excellent<br>
+                <input type='radio' name='QE' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QE' value='3' required> Agree<br>
+                <input type='radio' name='QE' value='2' required> Disagree<br>
+                <input type='radio' name='QE' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">6) Were the lectures clear/well organized and presented at a reasonable pace?</span><br>
+                <input type='radio' name='QF' value='5' required> Excellent<br>
+                <input type='radio' name='QF' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QF' value='3' required> Agree<br>
+                <input type='radio' name='QF' value='2' required> Disagree<br>
+                <input type='radio' name='QF' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">7) Developed the skills and knowledge to plan, organize, market, and manage conventions, meetings, and events effectively and efficiently</span><br>
+                <input type='radio' name='QG' value='5' required> Excellent<br>
+                <input type='radio' name='QG' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QG' value='3' required> Agree<br>
+                <input type='radio' name='QG' value='2' required> Disagree<br>
+                <input type='radio' name='QG' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">8) Did the lectures stimulate you intellectually?</span><br>
+                <input type='radio' name='QH' value='5' required> Excellent<br>
+                <input type='radio' name='QH' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QH' value='3' required> Agree<br>
+                <input type='radio' name='QH' value='2' required> Disagree<br>
+                <input type='radio' name='QH' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">9) What approaches/aids would facilitate your learning? You can check multiple options.</span><br>
+                <input type='radio' name='QI' value='5' required> Excellent<br>
+                <input type='radio' name='QI' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QI' value='3' required> Agree<br>
+                <input type='radio' name='QI' value='2' required> Disagree<br>
+                <input type='radio' name='QI' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">10) Did the problems worked out in classroom/online class help you to understand how to solve questions on your own?</span><br>
+                <input type='radio' name='QJ' value='5' required> Excellent<br>
+                <input type='radio' name='QJ' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QJ' value='3' required> Agree<br>
+                <input type='radio' name='QJ' value='2' required> Disagree<br>
+                <input type='radio' name='QJ' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">11) Is the grading scheme clearly outlined and reasonable/fair?</span><br>
+                <input type='radio' name='QK' value='5' required> Excellent<br>
+                <input type='radio' name='QK' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QK' value='3' required> Agree<br>
+                <input type='radio' name='QK' value='2' required> Disagree<br>
+                <input type='radio' name='QK' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+            <div class='col-md-12'><span class="font-weight-bold">12) Overall, I was satisfied with my study experiences in the CSE department</span><br>
+                <input type='radio' name='QZ' value='5' required> Excellent<br>
+                <input type='radio' name='QZ' value='4' required> Strongly Agree<br>
+                <input type='radio' name='QZ' value='3' required> Agree<br>
+                <input type='radio' name='QZ' value='2' required> Disagree<br>
+                <input type='radio' name='QZ' value='1' required> Strongly Disagree<br>
+                <hr>
+            </div>
+        </div>
+        
+        <div id="partB"></div> <!-- Part B questions will be loaded here -->
+        
+        <div class="text-center"><br>
+            <!--  -->
+            <button type="submit" name="submit_feedback" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
